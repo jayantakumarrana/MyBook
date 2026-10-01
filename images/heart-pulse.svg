@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 132">
+  <defs>
+    <linearGradient id="heartSkin" x1=".15" y1=".05" x2=".85" y2="1">
+      <stop offset="0" stop-color="#ff8b9b"/>
+      <stop offset=".3" stop-color="#e33b53"/>
+      <stop offset=".72" stop-color="#aa102e"/>
+      <stop offset="1" stop-color="#5f071d"/>
+    </linearGradient>
+    <linearGradient id="vessels" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#ffb0ad"/>
+      <stop offset=".55" stop-color="#c92743"/>
+      <stop offset="1" stop-color="#760b25"/>
+    </linearGradient>
+    <linearGradient id="pulseColor">
+      <stop stop-color="#ff526f"/>
+      <stop offset=".48" stop-color="#fff4f3"/>
+      <stop offset="1" stop-color="#6deaff"/>
+    </linearGradient>
+    <radialGradient id="heartLight" cx=".32" cy=".22" r=".8">
+      <stop stop-color="#fff" stop-opacity=".7"/>
+      <stop offset="1" stop-color="#ffb6c0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-.4" y="-.5" width="1.8" height="2">
+      <feGaussianBlur stdDeviation="2.4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <ellipse cx="120" cy="119" rx="67" ry="5" fill="#ff5270" opacity=".22"/>
+  <g class="heart">
+    <path fill="url(#vessels)" stroke="#ff8f9d" stroke-width="2" d="M93 43c-12-9-16-23-10-32 5-8 16-7 19 1l5 18 8 12zm24-2c-6-13-4-28 5-34 8-5 17 2 14 11l-5 18 6 12z"/>
+    <path fill="url(#heartSkin)" stroke="#ff788b" stroke-width="2" d="M119 119c-8-7-19-15-30-25C73 80 62 67 62 51c0-17 12-29 28-29 13 0 23 8 30 20 7-12 17-20 30-20 16 0 28 12 28 29 0 16-11 29-27 43-11 10-23 18-32 25Z"/>
+    <path fill="url(#heartLight)" d="M91 28c-13 0-22 9-22 22 0 12 9 23 20 31-4-13-1-25 8-33 6-6 13-8 21-7-6-8-15-13-27-13Z"/>
+    <path fill="none" stroke="#ff9aa7" stroke-opacity=".55" stroke-width="2" stroke-linecap="round" d="M83 45c-5 10-2 19 5 26m43-29c10 7 13 18 8 28m-27 8c-3 9 0 19 7 26"/>
+    <path fill="none" stroke="#69051c" stroke-opacity=".45" stroke-width="3" stroke-linecap="round" d="M119 52c-2 15-1 32 2 48m17-54c-9 9-12 20-12 31m-33-27c11 5 17 14 20 26"/>
+  </g>
+  <path class="pulse-base" d="M0 65h48l8-7 7 18 10-41 11 61 11-34 8 3h17l9-7 7 17 11-42 11 60 11-34 8 6h55"/>
+  <path class="pulse-trace" pathLength="100" d="M0 65h48l8-7 7 18 10-41 11 61 11-34 8 3h17l9-7 7 17 11-42 11 60 11-34 8 6h55"/>
+  <style>
+    .heart{transform-box:fill-box;transform-origin:center;animation:heartbeat 1.15s ease-in-out infinite}
+    .pulse-base,.pulse-trace{fill:none;stroke:url(#pulseColor);stroke-linecap:round;stroke-linejoin:round}
+    .pulse-base{stroke-width:2;opacity:.78}
+    .pulse-trace{stroke:#fff;stroke-width:2.4;stroke-dasharray:10 90;animation:travel 1.2s linear infinite;filter:url(#softGlow)}
+    @keyframes heartbeat{0%,30%,60%,100%{transform:scale(1)}10%{transform:scale(1.1,.92)}20%{transform:scale(.95,1.06)}40%{transform:scale(1.07,.94)}50%{transform:scale(1)}}
+    @keyframes travel{to{stroke-dashoffset:-100}}
+    @media(prefers-reduced-motion:reduce){.heart,.pulse-trace{animation:none}}
+  </style>
+</svg>
