@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Whispers of the Heart — Luxury Edition</title>
+  <title>Whispers of the Heart</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -40,7 +40,6 @@
     <!-- OPEN BOOK -->
     <section id="bookScreen" class="screen hidden">
       <div class="topbar">
-        <button class="music-btn" id="musicBtn" onclick="toggleMusic()">♫ Music Off</button>
         <span id="readingStatus">Introduction</span>
       </div>
 
@@ -66,17 +65,15 @@
       </div>
 
       <div class="controls">
-        <button class="nav-btn" id="prevBtn" onclick="previousSpread()">‹ Previous</button>
         <div class="progress">
           <span id="progressText">Introduction</span>
           <div class="progress-track"><span id="progressBar"></span></div>
         </div>
-        <button class="nav-btn" id="nextBtn" onclick="nextSpread()">Next ›</button>
       </div>
     </section>
 
     <!-- BACK COVER -->
-    <section id="backScreen" class="screen hidden">
+    <section id="backScreen" class="screen hidden" onclick="readAgain()" tabindex="0" role="button" aria-label="Read the book again">
       <div class="luxury-book back-cover">
         <div class="back-board">
           <div class="cover-frame back-frame">
@@ -85,17 +82,12 @@
             <div class="gold-rule"></div>
             <p>Every page holds a memory.<br>Every poem carries a feeling.</p>
             <div class="medallion"><img src="images/heart-pulse.svg" alt="Pulsing red heart with an ECG line"></div>
-            <button class="again-btn" onclick="readAgain()">READ IT AGAIN</button>
           </div>
         </div>
         <div class="spine back-spine"></div>
       </div>
     </section>
   </main>
-
-  <audio id="bgMusic" loop preload="auto">
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
 
   <script src="script.js"></script>
 </body>

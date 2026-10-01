@@ -99,11 +99,7 @@ button{font:inherit}
 
 /* OPEN BOOK */
 #bookScreen{grid-template-rows:auto 1fr auto}
-.topbar{width:min(1250px,97vw);display:flex;justify-content:space-between;align-items:center;font:11px Arial,sans-serif;letter-spacing:2px;color:#ead29b}
-.music-btn{
-  border:1px solid rgba(225,190,103,.65);background:rgba(44,8,6,.5);color:#f1d58a;
-  padding:9px 15px;border-radius:4px;cursor:pointer
-}
+.topbar{width:min(1250px,97vw);display:flex;justify-content:center;align-items:center;font:11px Arial,sans-serif;letter-spacing:2px;color:#ead29b}
 .book-stage{width:min(1240px,97vw);perspective:2500px;position:relative}
 .desk-shadow{position:absolute;left:4%;right:4%;bottom:-24px;height:55px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(20px)}
 .open-book{
@@ -117,7 +113,7 @@ button{font:inherit}
     radial-gradient(circle at 50% 40%,rgba(255,255,255,.45),transparent 55%),
     repeating-linear-gradient(0deg,rgba(120,90,48,.035) 0 1px,transparent 1px 4px),
     var(--paper);
-  box-shadow:inset 0 0 30px rgba(70,42,17,.13)
+  box-shadow:inset 0 0 30px rgba(70,42,17,.13);cursor:pointer;touch-action:manipulation
 }
 .left-page{left:0;border-radius:7px 0 0 7px}
 .right-page{right:0;border-radius:0 7px 7px 0}
@@ -135,7 +131,6 @@ button{font:inherit}
 .photo{width:100%;height:100%;object-fit:cover;animation:photoFloat 9s ease-in-out infinite alternate;transform:scale(1.04)}
 .photo-frame:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.3),transparent 34%,rgba(0,0,0,.1))}
 @keyframes photoFloat{from{transform:scale(1.04) translate(-1%,-1%)}to{transform:scale(1.12) translate(1%,1%)}}
-.page-label{font:10px Arial,sans-serif;letter-spacing:3px;color:#94673a;margin-bottom:13px}
 .poem-copy h2{font-size:clamp(24px,3vw,36px);font-weight:400;color:var(--wine);margin-bottom:18px}
 .poem{font-size:clamp(14px,1.5vw,18px);line-height:1.82;font-style:italic;white-space:pre-line}
 .page-num{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font:10px Arial,sans-serif;color:#8d6a43}
@@ -152,16 +147,14 @@ button{font:inherit}
 @keyframes turnForward{0%{transform:rotateY(0);filter:brightness(1)}45%{transform:rotateY(-90deg);filter:brightness(.82)}100%{transform:rotateY(-180deg);filter:brightness(1)}}
 @keyframes turnBack{0%{transform:rotateY(0)}50%{transform:rotateY(90deg);filter:brightness(.84)}100%{transform:rotateY(180deg)}}
 /* CONTROLS */
-.controls{width:min(900px,95vw);display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;margin-top:20px}
-.nav-btn{border:1px solid rgba(225,190,103,.7);background:linear-gradient(#7f241b,#4d0d0a);color:#f4d78f;padding:11px 22px;border-radius:4px;cursor:pointer;box-shadow:0 5px 14px rgba(0,0,0,.2)}
-.nav-btn:hover{transform:translateY(-2px)}.nav-btn:disabled{opacity:.35;cursor:not-allowed;transform:none}
+.controls{width:min(900px,95vw);display:flex;justify-content:center;align-items:center;margin-top:20px}
 .progress{text-align:center;font:11px Arial,sans-serif;color:#ead29b;letter-spacing:1px}
 .progress-track{width:min(320px,100%);height:3px;margin:8px auto 0;background:rgba(255,255,255,.2);border-radius:9px;overflow:hidden}
 .progress-track span{display:block;height:100%;background:var(--gold);transition:width .5s}
 /* BACK */
 .back-cover{background:linear-gradient(135deg,#4e0a08,#8a261b,#4c0907);border:8px solid #350605;padding:23px;box-shadow:inset 0 0 0 2px rgba(239,197,104,.5),25px 32px 40px rgba(0,0,0,.45)}
 .back-board{height:100%;border:1px solid var(--gold);display:grid;place-items:center;text-align:center;color:var(--gold2);padding:30px}
-.back-frame h2{font-size:32px;font-weight:400}.back-frame p{line-height:1.8;font-style:italic}.again-btn{margin-top:38px;padding:12px 24px;border:1px solid var(--gold);background:var(--gold);color:#3d0b08;font:11px Arial,sans-serif;letter-spacing:2px;cursor:pointer;border-radius:3px}.back-spine{left:-15px}
+.back-frame h2{font-size:32px;font-weight:400}.back-frame p{line-height:1.8;font-style:italic}.back-cover{cursor:pointer}.back-spine{left:-15px}
 
 /* MOBILE */
 @media(max-width:760px){
@@ -173,6 +166,4 @@ button{font:inherit}
   .photo-frame{height:31vh}
   .poem{line-height:1.55}
   .turn-sheet{display:none}
-  .controls{gap:7px}
-  .nav-btn{padding:9px 12px;font-size:12px}
 }
