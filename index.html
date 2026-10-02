@@ -47,6 +47,7 @@
         <div class="desk-shadow"></div>
         <div class="open-book" id="book">
           <div class="leather-underlay"></div>
+          <button class="song-toggle" id="songToggle" type="button" disabled aria-pressed="false" aria-label="No song on this page" title="No song on this page"></button>
 
           <div class="page left-page" id="leftPage"></div>
           <div class="page right-page" id="rightPage"></div>
@@ -89,6 +90,7 @@
     </section>
   </main>
 
+  <audio id="pageAudio" preload="none"></audio>
   <script src="script.js"></script>
 </body>
 </html>

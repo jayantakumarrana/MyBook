@@ -99,7 +99,11 @@ button{font:inherit}
 
 /* OPEN BOOK */
 #bookScreen{grid-template-rows:auto 1fr auto}
-.topbar{width:min(1250px,97vw);display:flex;justify-content:center;align-items:center;font:11px Arial,sans-serif;letter-spacing:2px;color:#ead29b}
+.topbar{position:relative;width:min(1250px,97vw);min-height:36px;display:flex;justify-content:center;align-items:center;font:11px Arial,sans-serif;letter-spacing:2px;color:#ead29b}
+.song-toggle{position:absolute;top:2.5%;left:1.2%;z-index:50;display:grid;place-items:center;width:28px;height:28px;padding:0;border:1px solid rgba(225,190,103,.75);border-radius:50%;background:rgba(44,8,6,.68);color:#f1d58a;cursor:pointer}
+.song-toggle::before{content:"";width:0;height:0;margin-left:2px;border-top:6px solid transparent;border-bottom:6px solid transparent;border-left:9px solid currentColor}
+.song-toggle[aria-pressed="true"]::before{width:8px;height:11px;margin-left:0;border:0;border-left:3px solid currentColor;border-right:3px solid currentColor}
+.song-toggle:disabled{opacity:.5;cursor:not-allowed}
 .book-stage{width:min(1240px,97vw);perspective:2500px;position:relative}
 .desk-shadow{position:absolute;left:4%;right:4%;bottom:-24px;height:55px;border-radius:50%;background:rgba(0,0,0,.55);filter:blur(20px)}
 .open-book{
@@ -126,13 +130,15 @@ button{font:inherit}
 .intro h2,.thanks h2{font-size:clamp(28px,4vw,42px);font-weight:400;color:var(--wine);margin-bottom:18px}
 .intro p,.thanks p{font-size:clamp(14px,1.6vw,18px);line-height:1.8;margin-bottom:12px}
 .quote{font-style:italic;color:#81362a;margin-top:22px}
-.poetry{height:100%;display:grid;grid-template-columns:47% 53%;gap:28px;align-items:center}
+.poetry{height:100%;display:grid;grid-template-columns:47% 53%;gap:18px;align-items:center}
 .photo-frame{height:min(44vh,355px);overflow:hidden;border:8px solid #fffdf4;box-shadow:0 12px 25px rgba(60,35,12,.25);position:relative;background:#cdb27e}
 .photo{width:100%;height:100%;object-fit:cover;animation:photoFloat 9s ease-in-out infinite alternate;transform:scale(1.04)}
 .photo-frame:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(120deg,rgba(255,255,255,.3),transparent 34%,rgba(0,0,0,.1))}
 @keyframes photoFloat{from{transform:scale(1.04) translate(-1%,-1%)}to{transform:scale(1.12) translate(1%,1%)}}
-.poem-copy h2{font-size:clamp(24px,3vw,36px);font-weight:400;color:var(--wine);margin-bottom:18px}
-.poem{font-size:clamp(14px,1.5vw,18px);line-height:1.82;font-style:italic;white-space:pre-line}
+.poem-copy{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.poem-copy h2{font-size:clamp(22px,2.5vw,32px);font-weight:600;letter-spacing:.02em;color:var(--wine);margin-bottom:8px;line-height:1.2;text-align:center}
+.poem{font-size:clamp(14px,1.5vw,18px);line-height:1.5;font-style:italic;white-space:pre-line;color:#3c291e;text-align:center}
+.story-quote{margin:8px auto 0;padding-left:10px;border-left:2px solid var(--gold);color:#81362a;font-size:clamp(12px,1.2vw,15px);line-height:1.5;font-style:italic;text-align:center}
 .page-num{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);font:10px Arial,sans-serif;color:#8d6a43}
 .gutter-shade{position:absolute;top:0;bottom:0;width:28px;pointer-events:none}
 .left-page .gutter-shade{right:0;background:linear-gradient(90deg,transparent,rgba(50,28,11,.18))}
@@ -159,6 +165,7 @@ button{font:inherit}
 /* MOBILE */
 @media(max-width:760px){
   .screen{padding:12px}
+  .topbar{justify-content:center}
   .open-book{aspect-ratio:.69}
   .right-page,.right-stack,.gutter{display:none}
   .left-page{width:100%;right:auto;border-radius:7px}
