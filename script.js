@@ -97,12 +97,88 @@ const progressText=document.getElementById("progressText"),progressBar=document.
 const pageAudio=document.getElementById("pageAudio"),songToggle=document.getElementById("songToggle");
 const pageSongs=["songs/jaudio1.mp3","songs/jaudio2.mp3","songs/jaudio3.mp3","songs/jaudio4.webm","songs/jaudio5.mp3"];
 let activeSongSpread=-1;
+const countdownLabel=document.querySelector(".countdown-label"),countdownUnits=document.getElementById("countdownUnits");
+const birthdayWish=document.getElementById("birthdayWish");
+const birthdayAudio=new Audio("songs/birthdayWish.mp3");
+birthdayAudio.preload="auto";
+let birthdayCelebrated=false,birthdayBlastInterval=null;
+const birthdayBlastTimeouts=[];
 
-function openBook(){stopPageSong(true);coverScreen.classList.add("hidden");backScreen.classList.add("hidden");bookScreen.classList.remove("hidden");spread=-1;renderSpread()}
+function updateCountdown(){
+  const now=new Date();
+  if(now.getMonth()===9&&now.getDate()===10){
+    document.getElementById("countdownDays").textContent="00";
+    document.getElementById("countdownHours").textContent="00";
+    document.getElementById("countdownMinutes").textContent="00";
+    document.getElementById("countdownSeconds").textContent="00";
+    countdownLabel.textContent="The day is here!";
+    celebrateBirthday();
+    return
+  }
+  let target=new Date(now.getFullYear(),9,10);
+  if(target<now)target=new Date(now.getFullYear()+1,9,10);
+  const remaining=Math.max(0,target-now);
+  const totalSeconds=Math.floor(remaining/1000);
+  document.getElementById("countdownDays").textContent=String(Math.floor(totalSeconds/86400)).padStart(2,"0");
+  document.getElementById("countdownHours").textContent=String(Math.floor(totalSeconds%86400/3600)).padStart(2,"0");
+  document.getElementById("countdownMinutes").textContent=String(Math.floor(totalSeconds%3600/60)).padStart(2,"0");
+  document.getElementById("countdownSeconds").textContent=String(totalSeconds%60).padStart(2,"0")
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+function celebrateBirthday(){
+  if(birthdayCelebrated||coverScreen.classList.contains("hidden"))return;
+  birthdayCelebrated=true;
+  countdownUnits.classList.add("hidden");
+  birthdayWish.classList.remove("hidden");
+  createBirthdayConfetti();
+  birthdayBlastTimeouts.push(setTimeout(createBirthdayConfetti,900));
+  birthdayBlastTimeouts.push(setTimeout(createBirthdayConfetti,1800));
+  birthdayBlastInterval=setInterval(createBirthdayConfetti,10000);
+  playBirthdaySong()
+}
+function stopBirthdayCelebration(){
+  birthdayBlastTimeouts.forEach(clearTimeout);
+  birthdayBlastTimeouts.length=0;
+  if(birthdayBlastInterval!==null){clearInterval(birthdayBlastInterval);birthdayBlastInterval=null}
+  document.querySelectorAll(".birthday-confetti").forEach(burst=>burst.remove());
+  birthdayAudio.pause();
+  birthdayAudio.currentTime=0
+}
+function createBirthdayConfetti(){
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const bounds=birthdayWish.getBoundingClientRect();
+  const originX=bounds.left+bounds.width/2,originY=bounds.top+bounds.height/2;
+  const burst=document.createElement("div"),colors=["#ffe06b","#ff496c","#fff8e5","#ff9e42","#55d9c1","#f4d98c"];
+  burst.className="birthday-confetti";
+  burst.setAttribute("aria-hidden","true");
+  burst.style.setProperty("--burst-origin-x",`${originX}px`);
+  burst.style.setProperty("--burst-origin-y",`${originY}px`);
+  for(let index=0;index<140;index++){
+    const angle=Math.random()*Math.PI*2,distance=90+Math.random()*Math.max(innerWidth,innerHeight)*.62;
+    const piece=document.createElement("span");
+    piece.className="birthday-confetti-piece";
+    piece.style.setProperty("--burst-x",`${Math.cos(angle)*distance}px`);
+    piece.style.setProperty("--burst-y",`${Math.sin(angle)*distance}px`);
+    piece.style.setProperty("--burst-spin",`${360+Math.random()*720}deg`);
+    piece.style.setProperty("--burst-duration",`${3.2+Math.random()}s`);
+    piece.style.setProperty("--burst-delay",`${Math.random()*.12}s`);
+    piece.style.setProperty("--burst-size",`${8+Math.random()*10}px`);
+    piece.style.setProperty("--burst-radius",Math.random()>.5?"50%":"2px");
+    piece.style.backgroundColor=colors[Math.floor(Math.random()*colors.length)];
+    burst.append(piece)
+  }
+  document.body.append(burst);
+  setTimeout(()=>burst.remove(),4500)
+}
+function playBirthdaySong(){birthdayAudio.play().catch(()=>{})}
+
+function openBook(){stopBirthdayCelebration();stopPageSong(true);coverScreen.classList.add("hidden");backScreen.classList.add("hidden");bookScreen.classList.remove("hidden");spread=-1;renderSpread()}
 function readAgain(){stopPageSong(true);backScreen.classList.add("hidden");coverScreen.classList.remove("hidden");spread=-1}
 function shell(content,num=""){return `<div class="page-content">${content}${num?`<div class="page-num">${num}</div>`:""}<div class="gutter-shade"></div></div>`}
 function introHTML(){return shell(`<div class="intro"><div class="intro-inner"><div class="mini-ornament">✦</div><h2>Welcome</h2><p>Welcome to a small collection of thoughts, memories, dreams and feelings.</p><p>Turn the pages slowly and let each poem take you somewhere special.</p><p class="quote">"Every page is a doorway, and every poem is a journey."</p></div></div>`) }
-function poemHTML(item,num){const quote=item.quote?`<blockquote class="story-quote">"${item.quote}"</blockquote>`:"";return shell(`<div class="poetry"><div class="photo-frame"><img class="photo" src="${item.image}" alt="${item.title}"></div><div class="poem-copy"><h2>${item.title}</h2><div class="poem">${item.poem}</div>${quote}</div></div>`,num)}
+function poemHTML(item,num){const quote=item.quote?`<blockquote class="story-quote">"${item.quote}"</blockquote>`:"";return shell(`<div class="poetry"><div class="photo-frame"><img class="photo photo-${num}" src="${item.image}" alt="${item.title}"></div><div class="poem-copy"><h2>${item.title}</h2><div class="poem">${item.poem}</div>${quote}</div></div>`,num)}
 function thanksHTML(){return shell(`<div class="thanks"><div class="thanks-inner"><div class="medallion" style="margin:0 auto 20px"><img src="images/heart-pulse.svg" alt="Pulsing red heart with an ECG line"></div><h2>Thanks for Reading</h2><p>Thank you for spending these moments with this little collection of poems.</p><p>May you always find a beautiful story waiting on the next page of life.</p></div></div>`)}
 function blankHTML(){return shell("")}
 
